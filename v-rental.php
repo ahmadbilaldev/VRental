@@ -20,3 +20,47 @@
 If ( ! defined( 'WPINC' ) ) {
 	die;
 }
+
+/**
+ * Define global constants
+ *
+ * @package VR
+ * @since 1.0.0
+ */
+
+// VR version.
+if ( ! defined( 'VR_VERSION' ) ) {
+	define( 'VR_VERSION', 1.0.0 );
+}
+
+// Define VR name.
+If ( ! defined( 'VR_NAME' ) ) {
+	define( 'VR_NAME', trim( dirname( plugin_basename( __FILE__ ) ), '/' ) );
+}
+
+// VR Dir.
+if ( ! defined( 'VR_DIR' ) ) {
+	define( 'VR_DIR' , WP_PLUGIN_DIR . '/' . VR_NAME );
+}
+
+// VR URL.
+if ( ! defined( 'VR_URL' ) ) {
+	define( 'VR_URL' , WP_PLUGIN_URL . '/' . VR_NAME );
+}
+
+/**
+ * Load Text Domain.
+ *
+ * @since 1.0.0
+ */
+function vr_load_plugin_textdomain() {
+	load_plugin_textdomain( 'VR', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+}
+
+// Add the function when `plugins_loaded`.
+add_action( 'plugins_loaded', 'vr_load_plugin_textdomain' );
+
+/**
+ * Main File.
+ */
+require_once( VR_DIR . '/assets/vr-init.php' );
