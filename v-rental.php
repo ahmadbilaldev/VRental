@@ -30,7 +30,7 @@ If ( ! defined( 'WPINC' ) ) {
 
 // VR version.
 if ( ! defined( 'VR_VERSION' ) ) {
-	define( 'VR_VERSION', 1.0.0 );
+	define( 'VR_VERSION', 1.0 );
 }
 
 // Define VR name.
