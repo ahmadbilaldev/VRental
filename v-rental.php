@@ -49,18 +49,6 @@ if ( ! defined( 'VR_URL' ) ) {
 }
 
 /**
- * Load Text Domain.
- *
- * @since 1.0.0
- */
-function vr_load_plugin_textdomain() {
-	load_plugin_textdomain( 'VR', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
-}
-
-// Add the function when `plugins_loaded`.
-add_action( 'plugins_loaded', 'vr_load_plugin_textdomain' );
-
-/**
  * Main File.
  */
 require_once( VR_DIR . '/assets/vr-init.php' );

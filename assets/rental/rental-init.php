@@ -29,7 +29,9 @@ if ( file_exists( VR_DIR . '/assets/rental/cpt-rental.php' ) ) {
 // Custom Taxonomy: `rental-destination`.
 if ( file_exists( VR_DIR . '/assets/rental/ct-rental-destination.php' ) ) {
 	require_once( VR_DIR . '/assets/rental/ct-rental-destination.php' );
+}
 
 // Custom Taxonomy: `rental-feature`.
 if ( file_exists( VR_DIR . '/assets/rental/ct-rental-feature.php' ) ) {
 	require_once( VR_DIR . '/assets/rental/ct-rental-feature.php' );
+}

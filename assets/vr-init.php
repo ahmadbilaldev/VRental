@@ -12,10 +12,19 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 /**
- * Initializes rental-init.php
+ * Initializes rental files.
  *
  * @since 1.0.0
  */
 if ( file_exists( VR_DIR . '/assets/rental/rental-init.php' ) ) {
 	require_once( VR_DIR . '/assets/rental/rental-init.php' );
+}
+
+/**
+ * Initializes metaboxes.
+ *
+ * @since 1.0.0
+ */
+if ( file_exists( VR_DIR . '/assets/metaboxes/vr-metabox.php' ) ) {
+	require_once( VR_DIR . '/assets/metaboxes/vr-metabox.php' );
 }
