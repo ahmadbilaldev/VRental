@@ -1,18 +1,10 @@
 <?php
 
 /**
- * The metabox file.
+ * Generates the metabox.
  *
  * @since 1.0.0
  */
-/*function vr_metabox_cb()
-{
-    ?>
-    	<label for="my_meta_box_text">Text Label</label>
-    	<input type="text" name="my_meta_box_text" id="my_meta_box_text" />
-    <?php
-}*/
-
 function vr_metabox_cb( $post ) {
 	/*
 	 * needed for security reasons
