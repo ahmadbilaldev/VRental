@@ -36,5 +36,36 @@ function vr_add_metabox() {
 		'high' // priority over another metaboxes on this page (default, low, high, core)
 	);
 }
- 
 add_action( 'add_meta_boxes', 'vr_add_metabox' );
+
+/*
+ * Save metabox data.
+ */
+
+function vr_save_post_meta( $post_id, $post ) {
+	/* 
+	 * Security checks
+	 */
+	if ( !isset( $_POST['vr_metabox_nonce'] ) 
+	|| !wp_verify_nonce( $_POST['vr_metabox_nonce'], basename( __FILE__ ) ) )
+		return $post_id;
+	/* 
+	 * Check current user permissions
+	 */
+	$post_type = get_post_type_object( $post->post_type );
+	if ( !current_user_can( $post_type->cap->edit_post, $post_id ) )
+		return $post_id;
+	/*
+	 * Do not save the data if autosave
+	 */
+	if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE ) 
+		return $post_id;
+ 
+	if ($post->post_type == 'post') { // define your own post type here
+		update_post_meta($post_id, 'vr_title', trim( $_POST['vr_title'] ) );
+		update_post_meta($post_id, 'vr_noindex', $_POST['vr_noindex']);
+	}
+	return $post_id;
+}
+ 
+add_action( 'save_post', 'vr_save_post_meta', 10, 2 );
