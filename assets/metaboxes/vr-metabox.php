@@ -5,6 +5,7 @@
  *
  * @since 1.0.0
  */
+
 function vr_metabox_cb( $post ) {
 	/*
 	 * needed for security reasons
