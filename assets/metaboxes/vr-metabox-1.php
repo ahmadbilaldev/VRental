@@ -6,6 +6,20 @@
  * @since 1.0.0
  */
 
+function vr_add_metabox() {
+	add_meta_box(
+		'vr_metabox', // metabox ID, it also will be the HTML id attribute
+		'My custom metabox', // title
+		'vr_metabox_cb', // this is a callback function, which will print HTML of our metabox
+		'post', // post type or post types in array
+		'side', // position on the screen where metabox should be displayed (normal, side, advanced)
+		'high' // priority over another metaboxes on this page (default, low, high, core)
+	);
+}
+
+/*
+ * The callback function for the metabox.
+ */
 function vr_metabox_cb( $post ) {
 	/*
 	 * needed for security reasons
@@ -27,16 +41,6 @@ function vr_metabox_cb( $post ) {
 	echo $html;
 }
 
-function vr_add_metabox() {
-	add_meta_box(
-		'vr_metabox', // metabox ID, it also will be the HTML id attribute
-		'My custom metabox', // title
-		'vr_metabox_cb', // this is a callback function, which will print HTML of our metabox
-		'post', // post type or post types in array
-		'side', // position on the screen where metabox should be displayed (normal, side, advanced)
-		'high' // priority over another metaboxes on this page (default, low, high, core)
-	);
-}
 add_action( 'add_meta_boxes', 'vr_add_metabox' );
 
 /*
@@ -63,7 +67,7 @@ function vr_save_post_meta( $post_id, $post ) {
 		return $post_id;
  
 	if ($post->post_type == 'post') { // define your own post type here
-		update_post_meta($post_id, 'vr_title', trim( $_POST['vr_title'] ) );
+		update_post_meta($post_id, 'vr_title', sanitize_text_field( trim( $_POST['vr_title'] ) ) );
 		update_post_meta($post_id, 'vr_noindex', $_POST['vr_noindex']);
 	}
 	return $post_id;

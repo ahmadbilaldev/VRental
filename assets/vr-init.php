@@ -25,6 +25,6 @@ if ( file_exists( VR_DIR . '/assets/rental/rental-init.php' ) ) {
  *
  * @since 1.0.0
  */
-if ( file_exists( VR_DIR . '/assets/metaboxes/vr-metabox.php' ) ) {
-	require_once( VR_DIR . '/assets/metaboxes/vr-metabox.php' );
+if ( file_exists( VR_DIR . '/assets/metaboxes/metabox-init.php' ) ) {
+	require_once( VR_DIR . '/assets/metaboxes/metabox-init.php' );
 }
