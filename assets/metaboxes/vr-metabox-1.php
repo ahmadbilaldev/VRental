@@ -1,76 +1,131 @@
 <?php
-
 /**
- * Generates the metabox.
+ * VR Meta box 1.
  *
- * @since 1.0.0
  */
-
-function vr_add_metabox() {
-	add_meta_box(
-		'vr_metabox', // metabox ID, it also will be the HTML id attribute
-		'My custom metabox', // title
-		'vr_metabox_cb', // this is a callback function, which will print HTML of our metabox
-		'post', // post type or post types in array
-		'side', // position on the screen where metabox should be displayed (normal, side, advanced)
-		'high' // priority over another metaboxes on this page (default, low, high, core)
+add_filter( 'rwmb_meta_boxes', 'vr_register_meta_boxes' );
+/**
+ * Register meta boxes
+ *
+ * @param array $meta_boxes List of meta boxes
+ *
+ * @return array
+ */
+function vr_register_meta_boxes( $meta_boxes ) {
+	
+	// Better has an underscore as last sign
+	$prefix = 'vr_';
+	// meta box 1
+	$meta_boxes[] = array(
+		// Meta box id, UNIQUE per meta box. Optional since 4.1.5
+		'id'         => 'standard',
+		// Meta box title - Will appear at the drag and drop handle bar. Required.
+		'title'      => esc_html__( 'Standard Fields', 'textdomain' ),
+		// Post types, accept custom post types as well - DEFAULT is 'post'. Can be array (multiple post types) or string (1 post type). Optional.
+		'post_types' => array( 'post', 'page' ),
+		// Where the meta box appear: normal (default), advanced, side. Optional.
+		'context'    => 'normal',
+		// Order of meta box: high (default), low. Optional.
+		'priority'   => 'high',
+		// Auto save: true, false (default). Optional.
+		'autosave'   => true,
+		// List of meta fields
+		'fields'     => array(
+			// TEXT
+			array(
+				// Field name - Will be used as label
+				'name'  => esc_html__( 'Text', 'textdomain' ),
+				// Label description, display below field name (optional).
+				'label_description' => esc_html__( 'Some description', 'textdomain' ),
+				// Field ID, i.e. the meta key
+				'id'    => "{$prefix}text",
+				// Field description (optional)
+				'desc'  => esc_html__( 'Text description', 'textdomain' ),
+				'type'  => 'text',
+				// Default value (optional)
+				'std'   => esc_html__( 'Default text value', 'textdomain' ),
+				// CLONES: Add to make the field cloneable (i.e. have multiple value)
+				'clone' => true,
+			),
+			// CHECKBOX
+			array(
+				'name' => esc_html__( 'Checkbox', 'textdomain' ),
+				'id'   => "{$prefix}checkbox",
+				'type' => 'checkbox',
+				// Value can be 0 or 1
+				'std'  => 1,
+			),
+			// RADIO BUTTONS
+			array(
+				'name'    => esc_html__( 'Radio', 'textdomain' ),
+				'id'      => "{$prefix}radio",
+				'type'    => 'radio',
+				// Array of 'value' => 'Label' pairs for radio options.
+				// Note: the 'value' is stored in meta field, not the 'Label'
+				'options' => array(
+					'value1' => esc_html__( 'Label1', 'textdomain' ),
+					'value2' => esc_html__( 'Label2', 'textdomain' ),
+				),
+			),
+			// SELECT BOX
+			array(
+				'name'        => esc_html__( 'Select', 'textdomain' ),
+				'id'          => "{$prefix}select",
+				'type'        => 'select',
+				// Array of 'value' => 'Label' pairs for select box
+				'options'     => array(
+					'java'       => esc_html__( 'Java', 'textdomain' ),
+					'javascript' => esc_html__( 'JavaScript', 'textdomain' ),
+					'php'        => esc_html__( 'PHP', 'textdomain' ),
+					'csharp'     => esc_html__( 'C#', 'textdomain' ),
+					'objectivec' => esc_html__( 'Objective-C', 'textdomain' ),
+					'kotlin'     => esc_html__( 'Kotlin', 'textdomain' ),
+					'swift'      => esc_html__( 'Swift', 'textdomain' ),
+				),
+				// Select multiple values, optional. Default is false.
+				'multiple'    => true,
+				'std'         => 'value2',
+				'placeholder' => esc_html__( 'Select an Item', 'textdomain' ),
+				'select_all_none' => true,
+			),
+			// HIDDEN
+			array(
+				'id'   => "{$prefix}hidden",
+				'type' => 'hidden',
+				// Hidden field must have predefined value
+				'std'  => esc_html__( 'Hidden value', 'textdomain' ),
+			),
+			// PASSWORD
+			array(
+				'name' => esc_html__( 'Password', 'textdomain' ),
+				'id'   => "{$prefix}password",
+				'type' => 'password',
+			),
+			// TEXTAREA
+			array(
+				'name' => esc_html__( 'Textarea', 'textdomain' ),
+				'desc' => esc_html__( 'Textarea description', 'textdomain' ),
+				'id'   => "{$prefix}textarea",
+				'type' => 'textarea',
+				'cols' => 20,
+				'rows' => 3,
+			),
+		),
+		'validation' => array(
+			'rules'    => array(
+				"{$prefix}password" => array(
+					'required'  => true,
+					'minlength' => 7,
+				),
+			),
+			// optional override of default jquery.validate messages
+			'messages' => array(
+				"{$prefix}password" => array(
+					'required'  => esc_html__( 'Password is required', 'textdomain' ),
+					'minlength' => esc_html__( 'Password must be at least 7 characters', 'textdomain' ),
+				),
+			),
+		),
 	);
+	return $meta_boxes;
 }
-
-/*
- * The callback function for the metabox.
- */
-function vr_metabox_cb( $post ) {
-	/*
-	 * needed for security reasons
-	 */
-	wp_nonce_field( basename( __FILE__ ), 'vr_metabox_nonce' );
-	/*
-	 * text field
-	 */
-	$html = '<p><label>Title <input type="text" name="vr_title" value="' . esc_attr( get_post_meta($post->ID, 'vr_title',true) )  . '" /></label></p>';
-	/*
-	 * checkbox
-	 */
-	$html .= '<p><label><input type="checkbox" name="vr_noindex" ';
-	$html .= checked( get_post_meta($post->ID, 'vr_noindex',true), 'on', false );
-	$html .= ' /> checkbox. </label></p>';
-	/*
-	 * print all of this
-	 */
-	echo $html;
-}
-
-add_action( 'add_meta_boxes', 'vr_add_metabox' );
-
-/*
- * Save metabox data.
- */
-
-function vr_save_post_meta( $post_id, $post ) {
-	/* 
-	 * Security checks
-	 */
-	if ( !isset( $_POST['vr_metabox_nonce'] ) 
-	|| !wp_verify_nonce( $_POST['vr_metabox_nonce'], basename( __FILE__ ) ) )
-		return $post_id;
-	/* 
-	 * Check current user permissions
-	 */
-	$post_type = get_post_type_object( $post->post_type );
-	if ( !current_user_can( $post_type->cap->edit_post, $post_id ) )
-		return $post_id;
-	/*
-	 * Do not save the data if autosave
-	 */
-	if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE ) 
-		return $post_id;
- 
-	if ($post->post_type == 'post') { // define your own post type here
-		update_post_meta($post_id, 'vr_title', sanitize_text_field( trim( $_POST['vr_title'] ) ) );
-		update_post_meta($post_id, 'vr_noindex', $_POST['vr_noindex']);
-	}
-	return $post_id;
-}
- 
-add_action( 'save_post', 'vr_save_post_meta', 10, 2 );
