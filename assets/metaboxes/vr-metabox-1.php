@@ -34,13 +34,13 @@ function vr_register_meta_boxes( $meta_boxes ) {
 			// TEXT
 			array(
 				// Field name - Will be used as label
-				'name'  => esc_html__( 'Text', 'textdomain' ),
+				'name'  => esc_html__( 'Booking name', 'textdomain' ),
 				// Label description, display below field name (optional).
-				'label_description' => esc_html__( 'Some description', 'textdomain' ),
+				'label_description' => esc_html__( 'Name of the booking', 'textdomain' ),
 				// Field ID, i.e. the meta key
 				'id'    => "{$prefix}text",
 				// Field description (optional)
-				'desc'  => esc_html__( 'Text description', 'textdomain' ),
+				'desc'  => esc_html__( '', 'textdomain' ),
 				'type'  => 'text',
 				// Default value (optional)
 				'std'   => esc_html__( 'Default text value', 'textdomain' ),
@@ -53,19 +53,36 @@ function vr_register_meta_boxes( $meta_boxes ) {
 				'id'   => "{$prefix}checkbox",
 				'type' => 'checkbox',
 				// Value can be 0 or 1
-				'std'  => 1,
+				'std'  => 0,
 			),
 			// RADIO BUTTONS
 			array(
-				'name'    => esc_html__( 'Radio', 'textdomain' ),
+				'name'    => esc_html__( 'Select one', 'textdomain' ),
 				'id'      => "{$prefix}radio",
 				'type'    => 'radio',
 				// Array of 'value' => 'Label' pairs for radio options.
 				// Note: the 'value' is stored in meta field, not the 'Label'
 				'options' => array(
-					'value1' => esc_html__( 'Label1', 'textdomain' ),
-					'value2' => esc_html__( 'Label2', 'textdomain' ),
+					'value1' => esc_html__( '1', 'textdomain' ),
+					'value2' => esc_html__( '2', 'textdomain' ),
 				),
+			),
+			// PRICE SLIDER
+			array(
+				'name'       => esc_html__( 'Price', 'textdomain' ),
+				'id'         => "{$prefix}slider",
+				'type'       => 'slider',
+				// Text labels displayed before and after value
+				'prefix'     => esc_html__( '$', 'textdomain' ),
+				'suffix'     => esc_html__( ' USD', 'textdomain' ),
+				// jQuery UI slider options. See here http://api.jqueryui.com/slider/
+				'js_options' => array(
+					'min'  => 10,
+					'max'  => 255,
+					'step' => 5,
+				),
+				// Default value
+				'std'        => 160,
 			),
 			// SELECT BOX
 			array(
@@ -103,7 +120,7 @@ function vr_register_meta_boxes( $meta_boxes ) {
 			),
 			// TEXTAREA
 			array(
-				'name' => esc_html__( 'Textarea', 'textdomain' ),
+				'name' => esc_html__( 'Description', 'textdomain' ),
 				'desc' => esc_html__( 'Textarea description', 'textdomain' ),
 				'id'   => "{$prefix}textarea",
 				'type' => 'textarea',
