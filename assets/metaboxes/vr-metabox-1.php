@@ -29,6 +29,8 @@ function vr_register_meta_boxes( $meta_boxes ) {
 		'priority'   => 'high',
 		// Auto save: true, false (default). Optional.
 		'autosave'   => true,
+		// Geolocation.
+		'geo' => true,
 		// List of meta fields
 		'fields'     => array(
 			// TEXT
@@ -46,6 +48,7 @@ function vr_register_meta_boxes( $meta_boxes ) {
 				'std'   => esc_html__( 'Default text value', 'textdomain' ),
 				// CLONES: Add to make the field cloneable (i.e. have multiple value)
 				'clone' => true,
+
 			),
 			// CHECKBOX
 			array(
